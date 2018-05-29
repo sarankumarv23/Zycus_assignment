@@ -1,0 +1,25 @@
+Easily we can handle the 20 deployments weekly by below cases.
+
+1. Using Ansible deployment:
+---------------------------
+We can use Ansible script or deployments by using py script.
+Here you will be having more tools:-
+-----------------------------------
+Ansible
+Py script
+Jenkins with MVN or MVN
+minimum two resources
+servers to be deployed
+some Manual work around
+
+2. Using Jenkins and Shell:
+---------------------------
+It's an simple way to build our JAR, EAR and WAR files which was committed in SVN, GIT.
+Currently we are following same scenario, Because you need to give only source code patch for build for all deployments, jobs will be triggered automatically as configration of jenkins and the same builded artifacts(JAR, EAR and WAR files) will be committed to our SCM (SVN, GIT) &the jenkins will pullout those builded artifacts and it will deploy on our servers.
+
+Note: We are giving only source code path for building and deploying. All steps are handled in shell script easily and we will be notified for all changes. :) 
+
+Jenkins with MVN plug-in for Build and deployment
+some Shell script
+One resource is more than enough
+No manual work(Need to provide only Source path)
