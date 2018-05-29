@@ -1,0 +1,42 @@
+
+This is the generic Ansible script to deploy a war bundle on Tomcat with required
+tomcat server configuration.
+
+Hostfile
+---------
+[TOMCATSRVERS]
+HOSTNAME1
+HOSTNAME2
+HOSTNAME3
+
+
+Deploywar.yml
+----------------
+- hosts: TOMCATSRVERS
+
+  vars:
+
+  - warName: zycus.war
+  - warRemotePath: /path/to/put/war
+
+  tasks:
+	-name: Configure Tomcat server
+	template: src=server.xml dest=/usr/share/tomcat/conf/
+
+  - name: Download WAR to server
+    command: wget http://example.com/file.war -O {{ warRemotePath }}/{{ warName }}
+
+  - name: Unzip WAR file
+    unarchive: src={{ warRemotePath }}/{{ warName }} dest=/var/lib/tomcat7/webapps/ROOT/ copy=no mode=0755 owner=tomcat8 group=tomcat8
+    notify:
+        - restart tomcat8
+
+  - name: Delete remote war file
+    file: path={{ warRemotePath }}/{{ warName }} state=absent
+
+  handlers:
+
+    - name: Restart tomcat8
+      service: name=tomcat8 
+	  state=restarted
+	  
